@@ -9,8 +9,8 @@ const router = express.Router()
 router.get('/', async (req, res) => {
     try {
         const { search, department, page = 1, limit = 10 } = req.query
-        const currentPage = Math.max(1, +page)
-        const limitPerPage = Math.max(1, +limit)
+        const currentPage = Math.max(1, Number.isNaN(+page) ? 1 : +page)
+        const limitPerPage = Math.min(100, Math.max(1, Number.isNaN(+limit) ? 10 : +limit))
 
         const offset = (currentPage - 1) * limitPerPage
         const filterConditions = []
